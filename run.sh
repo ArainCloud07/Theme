@@ -23,7 +23,8 @@ show_menu() {
     echo "2) Blueprint 2 (If Blueprint 1 doesn't work)"
     echo "3) Fix Blueprint"
     echo "4) Theme + Extension"
-    echo "5) Uninstall Extension"
+    echo "5) Pterodactyl Email Setup"
+    echo "6) Uninstall Extension'
     echo "0) Exit"
     echo "--------------------------------------------------"
     echo -n "Enter your choice [0-6]: "
@@ -63,10 +64,15 @@ while true; do
             pause
             ;;
         5)
+            echo "Setup Email..."
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/adon/main/email.sh)
+            pause
+            ;;
+        6)
             echo "Uninstalling Extension..."
             bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/uninstallblueprint.sh)
             pause
-            ;;
+            ;;   
         0)
             echo "Exiting... Good Luck!"
             exit 0

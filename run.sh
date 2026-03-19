@@ -65,7 +65,7 @@ while true; do
             ;;
         5)
             echo "Setup Email..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Addon/main/email.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/adon/main/email.sh)
             pause
             ;;
         6)

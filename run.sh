@@ -24,7 +24,7 @@ show_menu() {
     echo "3) Fix Blueprint"
     echo "4) Theme + Extension"
     echo "5) Pterodactyl Email Setup"
-    echo "6) Uninstall Extension'
+    echo "6) Uninstall Extension"
     echo "0) Exit"
     echo "--------------------------------------------------"
     echo -n "Enter your choice [0-6]: "

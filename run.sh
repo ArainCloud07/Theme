@@ -11,7 +11,7 @@ show_banner() {
     echo " |____/|____/ \____/_/   \_\_|  |_|_____|_| \_\\"
     echo -e "\e[0m" # Color reset
     echo "=================================================="
-    echo "           PROJECT: SKA HOSTING PANEL             "
+    echo "       PROJECT: SKA HOST (SDGAMER) PANEL          "
     echo "=================================================="
 }
 
@@ -40,37 +40,37 @@ pause() {
 # Main Logic Loop
 while true; do
     show_menu
-    read choice
+    read -r choice
 
     case $choice in
         1)
             echo "Starting Blueprint 1..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/blueprint.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/ptheme/main/blueprint.sh)
             pause
             ;;
         2)
             echo "Starting Blueprint 2..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/blueprint-2.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/ptheme/main/blueprint-2.sh)
             pause
             ;;
         3)
             echo "Starting Fix Blueprint..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/fix.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/ptheme/main/fix.sh)
             pause
             ;;
         4)
             echo "Starting Theme + Extension..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/chang.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/ptheme/main/chang.sh)
             pause
             ;;
         5)
             echo "Setup Email..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/adon/main/email.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Addon/main/email.sh)
             pause
             ;;
         6)
             echo "Uninstalling Extension..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/uninstallblueprint.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/ptheme/main/uninstallblueprint.sh)
             pause
             ;;   
         0)
@@ -78,9 +78,8 @@ while true; do
             exit 0
             ;;
         *)
-            echo -e "\e[1;31mInvalid input!\e[0m Please select 0 to 5."
+            echo -e "\e[1;31mInvalid input!\e[0m Please select 0 to 6."
             sleep 2
             ;;
     esac
 done
-

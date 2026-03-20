@@ -45,22 +45,22 @@ while true; do
     case $choice in
         1)
             echo "Starting Blueprint 1..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/ptheme/main/blueprint.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/blueprint.sh)
             pause
             ;;
         2)
             echo "Starting Blueprint 2..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/ptheme/main/blueprint-2.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/blueprint-2.sh)
             pause
             ;;
         3)
             echo "Starting Fix Blueprint..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/ptheme/main/fix.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/fix.sh)
             pause
             ;;
         4)
             echo "Starting Theme + Extension..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/ptheme/main/chang.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/chang.sh)
             pause
             ;;
         5)
@@ -70,7 +70,7 @@ while true; do
             ;;
         6)
             echo "Uninstalling Extension..."
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/ptheme/main/uninstallblueprint.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/uninstallblueprint.sh)
             pause
             ;;   
         0)

@@ -436,7 +436,7 @@ install_theme() {
       bash <(curl -sL "$THEME_URL")
       return 0
   fi
-    # -- INSTALLATION ENGINE --
+# -- INSTALLATION ENGINE --
   set -e
   TEMP_DIR=$(mktemp -d)
   trap 'rm -rf -- "$TEMP_DIR"' EXIT
@@ -467,89 +467,35 @@ install_theme() {
     print_success "'$THEME_NAME' installed successfully."
 
   elif [ "$INSTALL_TYPE" == "standard" ]; then
-    print_info "[2/4] Extracting files..."
-    unzip -oq "$DOWNLOADED_FILE" || true
-
-    print_info "[3/4] Copying files to Pterodactyl..."
+    print_info "[2/4] Extracting files to Pterodactyl directory..."
+    sudo unzip -q -o "$DOWNLOADED_FILE" -d /var/www/pterodactyl/
     
-    # ====================================================================
-    # SMART COPY LOGIC (For dynamically added and standard zip themes)
-    # ====================================================================
-    
-    # ১. প্রথমে খুঁজবে আনজিপ করা ফাইলের ভেতর 'pterodactyl' নামের কোনো ফোল্ডার আছে কিনা
-    PTERO_DIR=$(find . -maxdepth 3 -type d -iname "pterodactyl" | head -n 1)
-
-    if [ -n "$PTERO_DIR" ]; then
-        sudo cp -r "$PTERO_DIR"/* /var/www/pterodactyl/
-    else
-        # ২. যদি 'pterodactyl' ফোল্ডার না থাকে, তবে সরাসরি resources/public ফোল্ডার খুঁজবে
-        if [ -d "./resources" ] || [ -d "./public" ]; then
-             sudo cp -r ./* /var/www/pterodactyl/
-        else
-            # ৩. অনেক সময় জিপের ভেতর একটাই মেইন ফোল্ডার থাকে (যেমন Ultra_Cheese-main)
-            SINGLE_DIR=$(find . -mindepth 1 -maxdepth 1 -type d | grep -v "$DOWNLOADED_FILE" | head -n 1)
-            
-            if [ -n "$SINGLE_DIR" ] && { [ -d "$SINGLE_DIR/resources" ] || [ -d "$SINGLE_DIR/public" ]; }; then
-                sudo cp -r "$SINGLE_DIR"/* /var/www/pterodactyl/
-            else
-                # ৪. সর্বশেষ উপায়, সরাসরি কারেন্ট ডিরেক্টরি থেকে কপি করবে (zip ফাইলটি বাদে)
-                rm -f "$DOWNLOADED_FILE"
-                sudo cp -r ./* /var/www/pterodactyl/ 2>/dev/null || true
-            fi
-        fi
-    fi
-    # ====================================================================
-
     cd /var/www/pterodactyl
-
-    print_info "Checking Node.js version..."
-    CURRENT_NODE_VER=$(node -v 2>/dev/null | cut -d'.' -f1 | sed 's/v//')
-    if [[ "$CURRENT_NODE_VER" != "22" ]]; then
-      print_warning "Installing Node.js v22..."
-      sudo apt-get remove -y nodejs npm > /dev/null 2>&1 || true
-      sudo apt-get purge -y nodejs > /dev/null 2>&1 || true
-      sudo rm -f /usr/bin/node /usr/local/bin/node /usr/bin/npm /usr/local/bin/npm /etc/apt/sources.list.d/nodesource.list
-      sudo mkdir -p /etc/apt/keyrings
-      curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor --yes | sudo tee /etc/apt/keyrings/nodesource.gpg > /dev/null
-      echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list > /dev/null
-      sudo apt-get update -y > /dev/null 2>&1
-      sudo apt-get install -y nodejs > /dev/null 2>&1
-    fi
-
-    hash -r
-    sudo npm i -g yarn > /dev/null 2>&1
     
-    print_info "Installing build dependencies..."
-    yarn add cross-env react-feather > /dev/null 2>&1
-    yarn install > /dev/null 2>&1
-
-    if [[ "$THEME_NAME" == *"Billing"* ]]; then
-      print_info "Running Billing installation..."
-      php artisan billing:install stable
+    # --- ARIX THEME SPECIFIC LOGIC ---
+    if [ "$THEME_NAME" == "Arix" ]; then
+        print_info "[3/4] Running Arix specific installation commands..."
+        sudo php artisan arix
+        
+        print_info "Running optimization and fallback commands for Arix..."
+        sudo php artisan migrate --force
+        sudo php artisan optimize:clear
+        sudo php artisan optimize
+        sudo chmod -R 755 storage/* bootstrap/cache
+    else
+        # Standard logic for other zip themes (Billing, Elysium, etc.)
+        print_info "[3/4] Optimizing panel for $THEME_NAME..."
+        sudo php artisan optimize:clear
     fi
-
-    print_info "[4/4] Building panel assets..."
-    print_warning "Build process is running. DO NOT close the terminal until it finishes!"
-    export NODE_OPTIONS=--openssl-legacy-provider
-    php artisan migrate --force
-    yarn build:production
-    php artisan view:clear
-    php artisan optimize:clear
+    # ---------------------------------
+    
+    print_info "[4/4] Setting final permissions..."
+    sudo chown -R www-data:www-data /var/www/pterodactyl/*
     
     print_success "'$THEME_NAME' installed successfully."
   fi
-
-  echo " "
-  log_success "[=================================================]"
-  log_success "[       INSTALLATION COMPLETED SUCCESSFULLY       ]"
-  log_success "[=================================================]"
-  echo " "
-  sleep 3
-  return 0
 }
 
-# ==========================================
-# START EXECUTION
-# ==========================================
+# --- Execute Functions ---
 start_script
 install_theme

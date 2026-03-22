@@ -436,7 +436,7 @@ install_theme() {
       bash <(curl -sL "$THEME_URL")
       return 0
   fi
-# -- INSTALLATION ENGINE --
+  # -- INSTALLATION ENGINE --
   set -e
   TEMP_DIR=$(mktemp -d)
   trap 'rm -rf -- "$TEMP_DIR"' EXIT
@@ -475,7 +475,17 @@ install_theme() {
     # --- ARIX THEME SPECIFIC LOGIC ---
     if [ "$THEME_NAME" == "Arix" ]; then
         print_info "[3/4] Running Arix specific installation commands..."
-        sudo php artisan arix
+        
+        # 1. Clear cache FIRST so Laravel sees the new command
+        sudo php artisan optimize:clear
+        
+        # 2. Try running the command
+        if sudo php artisan arix; then
+            print_success "Arix command executed successfully."
+        else
+            print_error "Arix command failed. The zip file might be structured incorrectly (files inside a subfolder)."
+            print_info "Attempting to force optimize and migrate anyway..."
+        fi
         
         print_info "Running optimization and fallback commands for Arix..."
         sudo php artisan migrate --force

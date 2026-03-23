@@ -260,6 +260,7 @@ submenu_xlpanel() {
     esac
   done
 }
+
 # ==========================================
 # MAIN MENU & DYNAMIC FETCHER
 # ==========================================
@@ -436,7 +437,7 @@ install_theme() {
       bash <(curl -sL "$THEME_URL")
       return 0
   fi
-  # -- INSTALLATION ENGINE --
+ # -- INSTALLATION ENGINE --
   set -e
   TEMP_DIR=$(mktemp -d)
   trap 'rm -rf -- "$TEMP_DIR"' EXIT
@@ -468,23 +469,39 @@ install_theme() {
 
   elif [ "$INSTALL_TYPE" == "standard" ]; then
     print_info "[2/4] Extracting files to Pterodactyl directory..."
-    sudo unzip -q -o "$DOWNLOADED_FILE" -d /var/www/pterodactyl/
     
+    # Safe Extraction: Handles zips that incorrectly have a root folder inside them
+    EXTRACT_TMP=$(mktemp -d)
+    sudo unzip -q -o "$DOWNLOADED_FILE" -d "$EXTRACT_TMP/"
+    
+    ROOT_ITEMS=$(ls -1A "$EXTRACT_TMP" | wc -l)
+    FIRST_ITEM=$(ls -1A "$EXTRACT_TMP" | head -n 1)
+    
+    if [ "$ROOT_ITEMS" -eq 1 ] && [ -d "$EXTRACT_TMP/$FIRST_ITEM" ]; then
+        print_info "Nested folder detected ($FIRST_ITEM). Moving contents to root..."
+        sudo cp -a "$EXTRACT_TMP/$FIRST_ITEM/." /var/www/pterodactyl/
+    else
+        sudo cp -a "$EXTRACT_TMP/." /var/www/pterodactyl/
+    fi
+    
+    sudo rm -rf "$EXTRACT_TMP"
     cd /var/www/pterodactyl
     
     # --- ARIX THEME SPECIFIC LOGIC ---
     if [ "$THEME_NAME" == "Arix" ]; then
         print_info "[3/4] Running Arix specific installation commands..."
         
-        # 1. Clear cache FIRST so Laravel sees the new command
+        # Ensure Laravel has permission to read the newly copied files
+        sudo chown -R www-data:www-data /var/www/pterodactyl/*
+        
+        # Clear cache FIRST so Laravel registers the new Arix command file
         sudo php artisan optimize:clear
         
-        # 2. Try running the command
+        # Try running the Arix command
         if sudo php artisan arix; then
             print_success "Arix command executed successfully."
         else
-            print_error "Arix command failed. The zip file might be structured incorrectly (files inside a subfolder)."
-            print_info "Attempting to force optimize and migrate anyway..."
+            print_error "Arix command failed."
         fi
         
         print_info "Running optimization and fallback commands for Arix..."
@@ -495,6 +512,7 @@ install_theme() {
     else
         # Standard logic for other zip themes (Billing, Elysium, etc.)
         print_info "[3/4] Optimizing panel for $THEME_NAME..."
+        sudo chown -R www-data:www-data /var/www/pterodactyl/*
         sudo php artisan optimize:clear
     fi
     # ---------------------------------

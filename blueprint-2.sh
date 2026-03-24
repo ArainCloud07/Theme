@@ -1,108 +1,109 @@
 #!/bin/bash
 
-# ================= COLORS =================
-R="\e[31m"; G="\e[32m"; Y="\e[33m"
-B="\e[34m"; M="\e[35m"; C="\e[36m"
-W="\e[97m"; N="\e[0m"
+# Colors setup
+CYAN='\033[0;36m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
 
-# ================= UI FUNCTIONS =================
-header() {
-  clear
-  echo -e "${C}"
-  echo "  ███████╗██████╗  ██████╗  █████╗ ███╗   ███╗███████╗██████╗ "
-  echo "  ██╔════╝██╔══██╗██╔════╝ ██╔══██╗████╗ ████║██╔════╝██╔══██╗"
-  echo "  ███████╗██║  ██║██║  ███╗███████║██╔████╔██║█████╗  ██████╔╝"
-  echo "  ╚════██║██║  ██║██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  ██╔══██╗"
-  echo "  ███████║██████╔╝╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██║  ██║"
-  echo "  ╚══════╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝"
-  echo -e "${M}"
-  echo "╔══════════════════════════════════════════════════════╗"
-  echo "║                🚀 SDGAMER INSTALLER                  ║"
-  echo "╠══════════════════════════════════════════════════════╣"
-  echo "║           UI • Auto • Clean • SDGAMER             ║"
-  echo "╚══════════════════════════════════════════════════════╝"
-  echo -e "${N}"
-}
+PANEL_DIR="/var/www/pterodactyl"
 
-step() {
-  echo -e "${C}➜ $1${N}"
-}
-
-ok() {
-  echo -e "${G}✔ $1${N}"
-}
-
-fail() {
-  echo -e "${R}✘ $1${N}"
-  exit 1
-}
-
-# ================= CHECK ROOT =================
-if [ "$EUID" -ne 0 ]; then
-  fail "Please run as root (sudo bash script.sh)"
-fi
-
-# ================= VARIABLES =================
-export PTERODACTYL_DIRECTORY=/var/www/pterodactyl
-
-# ================= START =================
-header
-step "Installing base dependencies (curl, wget, unzip)"
-apt update -y && apt install -y curl wget unzip ca-certificates git gnupg zip || fail "Deps install failed"
-ok "Base dependencies installed"
-
-step "Switching to Pterodactyl directory"
-if [ ! -d "$PTERODACTYL_DIRECTORY" ]; then
-    fail "Pterodactyl directory not found at $PTERODACTYL_DIRECTORY"
-fi
-cd "$PTERODACTYL_DIRECTORY" || fail "Cannot enter directory"
-
-step "Downloading SDGAMER Blueprint Framework"
-# Fetching the latest release URL dynamically
-DOWNLOAD_URL=$(curl -s https://api.github.com/repos/BlueprintFramework/framework/releases/latest | grep 'browser_download_url' | grep 'release.zip' | cut -d '"' -f 4)
-if [ -z "$DOWNLOAD_URL" ]; then
-    fail "Could not find latest release URL"
-fi
-
-wget "$DOWNLOAD_URL" -O "$PTERODACTYL_DIRECTORY/release.zip"
-unzip -o release.zip || fail "Unzip failed"
-ok "SDGAMER files downloaded & extracted"
-
-# ================= NODE.JS =================
-step "Installing Node.js 20.x"
-mkdir -p /etc/apt/keyrings
-curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" \
-> /etc/apt/sources.list.d/nodesource.list
-
-apt update -y && apt install -y nodejs || fail "Node.js install failed"
-ok "Node.js installed"
-
-# ================= YARN & DEPENDENCIES =================
-step "Installing Yarn & Node dependencies"
-npm i -g yarn || fail "Yarn install failed"
-yarn install || fail "Yarn dependencies failed"
-ok "Node dependencies ready"
-
-# ================= CONFIG =================
-step "Creating SDGAMER configuration"
-cat <<EOF > "$PTERODACTYL_DIRECTORY/.blueprintrc"
-WEBUSER="www-data";
-OWNERSHIP="www-data:www-data";
-USERSHELL="/bin/bash";
+# SDGAMER Banner
+clear
+echo -e "${CYAN}"
+cat << "EOF"
+  ____  ____   ____    _    __  __ _____ ____  
+ / ___||  _ \ / ___|  / \  |  \/  | ____|  _ \ 
+ \___ \| | | | |  _  / _ \ | |\/| |  _| | |_) |
+  ___) | |_| | |_| |/ ___ \| |  | | |___|  _ < 
+ |____/|____/ \____/_/   \_\_|  |_|_____|_| \_\
+ 
 EOF
-ok ".blueprintrc created"
+echo -e "${NC}"
+echo -e "${YELLOW}      Welcome to SKA HOST (SDGAMER) - Blueprint Installer${NC}"
+echo -e "${CYAN}=================================================================${NC}"
+echo ""
 
-# ================= PERMISSIONS =================
-step "Setting permissions"
-chmod +x "$PTERODACTYL_DIRECTORY/blueprint.sh" || fail "Permission failed"
-chown -R www-data:www-data "$PTERODACTYL_DIRECTORY"
-ok "Permissions fixed"
+# 1. Check if Pterodactyl is installed
+if [ ! -d "$PANEL_DIR" ] || [ ! -f "$PANEL_DIR/artisan" ]; then
+    echo -e "${RED}[ERROR] Pterodactyl Panel not found at $PANEL_DIR!${NC}"
+    echo -e "${YELLOW}Please install Pterodactyl Panel first before installing Blueprint.${NC}"
+    exit 1
+fi
 
-# ================= RUN BLUEPRINT =================
-step "Launching SDGAMER installer"
-bash "$PTERODACTYL_DIRECTORY/blueprint.sh"
+# 2. Automatically Detect Pterodactyl Version
+cd $PANEL_DIR
+PTERO_VERSION=$(php artisan --version | awk '{print $3}')
+echo -e "${GREEN}[+] Detected Pterodactyl Panel Version: ${CYAN}${PTERO_VERSION}${NC}"
+echo -e "${GREEN}[+] Preparing Blueprint Setup for this version...${NC}"
+echo ""
 
-# ================= DONE =================
-echo -e "\n${G}🎉 SDGAMER Installation Complete!${N}"
-echo -e "${Y}Panel is ready. Enjoy your new setup! 😏${N}"
+# Update Function
+update_blueprint() {
+    echo -e "${YELLOW}Starting Blueprint Update & Setup...${NC}"
+    cd $PANEL_DIR
+    
+    # Run official Blueprint upgrade command if available
+    if command -v blueprint > /dev/null; then
+        blueprint -upgrade
+    else
+        # Fallback manual update
+        wget https://github.com/teamblueprint/main/releases/latest/download/blueprint.zip
+        unzip -o blueprint.zip
+        chmod +x blueprint.sh
+        bash blueprint.sh
+    fi
+    
+    echo -e "${GREEN}Blueprint Update & Setup Completed Successfully!${NC}"
+}
+
+# Install Function
+install_blueprint() {
+    echo -e "${YELLOW}Starting Fresh Blueprint Installation & Setup...${NC}"
+
+    # Install System Dependencies required for Blueprint
+    echo -e "${CYAN}Installing Required Dependencies (Node.js, Yarn, Zip, etc.)...${NC}"
+    apt update -y
+    apt install -y ca-certificates curl gnupg zip unzip git wget
+
+    # Install Node.js (Required for Yarn and Blueprint build process)
+    if ! command -v node > /dev/null; then
+        mkdir -p /etc/apt/keyrings
+        curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+        echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+        apt update -y
+        apt install -y nodejs
+    fi
+
+    # Install Yarn Globally
+    npm install -g yarn
+
+    # Download and Install Blueprint Framework
+    echo -e "${CYAN}Downloading Blueprint Framework...${NC}"
+    cd $PANEL_DIR
+    wget https://github.com/teamblueprint/main/releases/latest/download/blueprint.zip
+    unzip -o blueprint.zip
+    
+    # Set permissions and Run
+    chmod +x blueprint.sh
+    echo -e "${CYAN}Executing Blueprint Setup Script...${NC}"
+    bash blueprint.sh
+
+    echo -e "${GREEN}Fresh Blueprint Installation & Setup Completed Successfully!${NC}"
+}
+
+# ==========================================
+# Main Execution Logic
+# ==========================================
+
+# Check if Blueprint is already installed (Checking for blueprint command or internal folder)
+if command -v blueprint > /dev/null || [ -f "$PANEL_DIR/blueprint.sh" ] || [ -d "$PANEL_DIR/.blueprint" ]; then
+    echo -e "${YELLOW}Blueprint Framework is already installed on this system!${NC}"
+    update_blueprint
+else
+    echo -e "${GREEN}No existing Blueprint Framework found.${NC}"
+    install_blueprint
+fi
+
+echo -e "${CYAN}Process Finished! You can now use Blueprint commands.${NC}"

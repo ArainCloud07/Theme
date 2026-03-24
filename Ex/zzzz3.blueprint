@@ -1,0 +1,10 @@
+name: rr
+identifier: rr
+description: Custom theme by sdgamer8263-sketch
+version: "1.0"
+author: sdgamer8263-sketch
+
+requests:
+  - app
+  - public
+  - resources

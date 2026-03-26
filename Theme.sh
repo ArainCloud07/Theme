@@ -547,13 +547,13 @@ install_theme() {
       arix-clear 2>/dev/null || true
       
       # Manual
+      bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/V.sh)
       cd /var/www/pterodactyl
       php artisan arix install 
       php artisan config:clear
       php artisan cache:clear
       php artisan view:clear
       php artisan route:clear
-      bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/V.sh)
     fi
     # ====================================================================
 

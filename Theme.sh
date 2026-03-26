@@ -549,11 +549,16 @@ install_theme() {
       # Manual
       bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/V.sh)
       cd /var/www/pterodactyl
-      php artisan arix install 
       php artisan config:clear
       php artisan cache:clear
       php artisan view:clear
       php artisan route:clear
+      sudo chown -R www-data:www-data /var/www/pterodactyl
+sudo chmod -R 755 /var/www/pterodactyl/storage
+sudo chmod -R 755 /var/www/pterodactyl/public/uploads/arix
+cd /var/www/pterodactyl
+yarn install
+yarn build:production
     fi
     # ====================================================================
 

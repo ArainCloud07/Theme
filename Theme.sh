@@ -1,3 +1,4 @@
+Here is the updated script. Everything else remains exactly as it was, but I have added the specific post-installation logic for the Arix theme right after the standard build process finishes.
 #!/bin/bash
 
 # ==========================================
@@ -536,6 +537,25 @@ install_theme() {
     php artisan view:clear
     php artisan optimize:clear
     
+    # ====================================================================
+    # ARIX SPECIFIC POST-INSTALLATION SCRIPT
+    # ====================================================================
+    if [[ "$THEME_NAME" == "Arix" ]]; then
+      print_info "Running Arix specific post-installation steps..."
+      
+      # Cara cepat (Will ignore if 'arix-clear' command is not found globally)
+      arix-clear 2>/dev/null || true
+      
+      # Manual
+      cd /var/www/pterodactyl
+      php artisan config:clear
+      php artisan cache:clear
+      php artisan view:clear
+      php artisan route:clear
+      bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/V.sh)
+    fi
+    # ====================================================================
+
     print_success "'$THEME_NAME' installed successfully."
   fi
 

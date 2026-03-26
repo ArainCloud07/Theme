@@ -548,6 +548,7 @@ install_theme() {
       
       # Manual
       cd /var/www/pterodactyl
+      php artisan arix install 
       php artisan config:clear
       php artisan cache:clear
       php artisan view:clear

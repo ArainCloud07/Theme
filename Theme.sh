@@ -1,4 +1,3 @@
-Here is the updated script. Everything else remains exactly as it was, but I have added the specific post-installation logic for the Arix theme right after the standard build process finishes.
 #!/bin/bash
 
 # ==========================================
@@ -261,6 +260,7 @@ submenu_xlpanel() {
     esac
   done
 }
+
 # ==========================================
 # MAIN MENU & DYNAMIC FETCHER
 # ==========================================
@@ -276,7 +276,6 @@ install_theme() {
       TREE_DATA=$(curl -s -H "User-Agent: AutoInstaller" "$API_URL")
   fi
 
-  # এই লিস্টে মেনুর নামগুলোর শুধুমাত্র "ALPHABET" (অক্ষর) রাখা হয়েছে।
   IGNORE_ALPHABETS=(
       "abysspurple" "amberabyss" "crimsonabyss" "emeraldabyss"
       "arix" "billing" "catppuccindactyl" "darkenate" "elysium"
@@ -286,23 +285,19 @@ install_theme() {
       "refresh" "refreshtheme" "stellar" "xlpanel" "xlpaneltheme"
   )
 
-  # ফাংশন: এটি নামের ভেতর থেকে স্পেস, নাম্বার, ডট, হিডেন ক্যারেক্টার সব মুছে শুধু ছোট হাতের অক্ষর মেলাবে
   is_ignored() {
       local file="$1"
-      # হিডেন ক্যারেক্টার রিমুভ
       file="${file//$'\r'/}"
       local base="${file%.*}"
-      # Pure Bash দিয়ে শুধুমাত্র a-z এবং A-Z অক্ষরগুলো রেখে বাকি সব মুছে ফেলা
       local pure_alpha="${base//[^a-zA-Z]/}"
-      # ছোট হাতের অক্ষরে রূপান্তর
       pure_alpha=$(echo "$pure_alpha" | tr '[:upper:]' '[:lower:]')
       
       for ignored in "${IGNORE_ALPHABETS[@]}"; do
           if [[ "$ignored" == "$pure_alpha" ]]; then
-              return 0 # নাম মিলে গেছে, তাই ইগনোর করবে
+              return 0
           fi
       done
-      return 1 # নতুন নাম, তাই লিস্টে অ্যাড করবে
+      return 1
   }
 
   declare -a DYNAMIC_NAMES
@@ -311,24 +306,20 @@ install_theme() {
   DYNAMIC_COUNT=0
 
   if echo "$TREE_DATA" | grep -q '"tree":'; then
-      # গিটহাব থেকে ফাইলগুলো নিয়ে "sort -f" কমান্ড দিয়ে A-Z অনুযায়ী সাজানো হচ্ছে
       while IFS= read -r raw_path; do
           [ -z "$raw_path" ] && continue
           
           file_path=$(echo "$raw_path" | tr -d '\r')
           filename="${file_path##*/}"
           
-          # Alphabet Matching এর মাধ্যমে চেক
           if ! is_ignored "$filename"; then
               base_name="${filename%.*}"
               base_name_clean="${base_name//%20/ }"
               
-              # নামের প্রথম অক্ষর বড় হাতের করা হচ্ছে
               first_char="${base_name_clean:0:1}"
               rest_str="${base_name_clean:1}"
               first_char_upper=$(echo "$first_char" | tr '[:lower:]' '[:upper:]')
               
-              # যদি ফাইলের নামে Theme লেখা না থাকে, তবে যোগ করবে (দেখতে সুন্দর লাগবে)
               display_name="${first_char_upper}${rest_str}"
               if [[ ! "${display_name,,}" == *"theme"* ]]; then
                   display_name="${display_name} Theme"
@@ -350,38 +341,56 @@ install_theme() {
   while true; do
     show_sdgamer_banner
     echo " "
-    echo -e "${CYAN}=== Main Themes ===${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[01]${NC} ${WHITE}ABYSS Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[02]${NC} ${WHITE}Arix Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[03]${NC} ${WHITE}Billing Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[04]${NC} ${WHITE}Catppuccindactyl Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[05]${NC} ${WHITE}Darkenate Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[06]${NC} ${WHITE}Elysium Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[07]${NC} ${WHITE}Enigma Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[08]${NC} ${WHITE}Euphoria Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[09]${NC} ${WHITE}Frostcore Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[10]${NC} ${WHITE}Hyper Theme V1${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[11]${NC} ${WHITE}IceMinecraft Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[12]${NC} ${WHITE}Lemem Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[13]${NC} ${WHITE}Lu Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[14]${NC} ${WHITE}Navy Seals Slice Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[15]${NC} ${WHITE}Nebula Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[16]${NC} ${WHITE}Nightcore Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[17]${NC} ${WHITE}Noobe Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[18]${NC} ${WHITE}Nook Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[19]${NC} ${WHITE}Refresh Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[20]${NC} ${WHITE}Stellar Theme${NC}"
-    echo -e " ${BRIGHT_WHITE}${BOLD}[21]${NC} ${WHITE}Xlpanel Theme${NC}"
     
+    # -----------------------------------------------------
+    # BEAUTIFUL V26.3 THEMES MENU BANNER
+    # -----------------------------------------------------
+    echo -e "${BOLD}${BRIGHT_MAGENTA}  ❖ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ❖${NC}"
+    echo -e "${BOLD}${BRIGHT_CYAN}                  🌟  T H E M E S   M E N U   V 2 6 . 3  🌟               ${NC}"
+    echo -e "${BOLD}${BRIGHT_MAGENTA}  ❖ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ❖${NC}"
+    echo " "
+
+    # -----------------------------------------------------
+    # 3-COLUMN GRID DISPLAY LOGIC
+    # -----------------------------------------------------
+    HARDCODED_THEMES=(
+        "ABYSS Theme" "Arix Theme" "Billing Theme" "Catppuccindactyl Theme" "Darkenate Theme"
+        "Elysium Theme" "Enigma Theme" "Euphoria Theme" "Frostcore Theme" "Hyper Theme V1"
+        "IceMinecraft Theme" "Lemem Theme" "Lu Theme" "Navy Seals Slice Theme" "Nebula Theme"
+        "Nightcore Theme" "Noobe Theme" "Nook Theme" "Refresh Theme" "Stellar Theme"
+        "Xlpanel Theme"
+    )
+
+    # Combine hardcoded and dynamic themes into one array
+    ALL_THEMES=("${HARDCODED_THEMES[@]}")
     if [ $DYNAMIC_COUNT -gt 0 ]; then
-        # নতুন থিমগুলো Alphabetical Order এ সাজানো থাকবে
         for i in "${!DYNAMIC_NAMES[@]}"; do
-            printf " ${BRIGHT_WHITE}${BOLD}[%02d]${NC} ${WHITE}%s${NC}\n" "$((i+22))" "${DYNAMIC_NAMES[$i]}"
+            ALL_THEMES+=("${DYNAMIC_NAMES[$i]}")
         done
     fi
 
+    COL_COUNT=0
+    for i in "${!ALL_THEMES[@]}"; do
+        INDEX=$((i+1))
+        
+        # Print each theme padded to 26 characters so the columns align nicely
+        printf " ${BRIGHT_WHITE}${BOLD}[%02d]${NC} ${WHITE}%-26s${NC}" "$INDEX" "${ALL_THEMES[$i]}"
+        
+        ((COL_COUNT++))
+        # Add a new line every 3 columns
+        if [[ $((COL_COUNT % 3)) -eq 0 ]]; then
+            echo ""
+        fi
+    done
+    
+    # Check if we need to close out the last row with a new line
+    if [[ $((COL_COUNT % 3)) -ne 0 ]]; then
+        echo ""
+    fi
+    # -----------------------------------------------------
+
     echo " "
-    echo -e " ${BRIGHT_WHITE}${BOLD}[0]${NC}  ${RED}Exit${NC}"
+    echo -e " ${BRIGHT_WHITE}${BOLD}[00]${NC}  ${RED}Exit${NC}"
     echo " "
     TOTAL_OPTIONS=$((21 + DYNAMIC_COUNT))
     echo -n -e "${BOLD}Enter your choice (0-$TOTAL_OPTIONS)${NC}${BOLD}: ${NC}"

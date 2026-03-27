@@ -44,7 +44,7 @@ start_script() {
   echo -e "${BOLD}${BLUE}[+]                                                 [+]${NC}"
   echo -e "${BOLD}${BLUE}[+]             ARIX THEME AUTO INSTALLER           [+]${NC}"
   echo -e "${BOLD}${BLUE}[+]              © SKA HOST (SDGAMER)               [+]${NC}"
-  echo -e "${BOLD}${BLUE}[+]                                                 [+]${NC}"
+  echo -e "${BOLD}${BLUE}[+]                    V26.1                             [+]${NC}"
   echo -e "${BOLD}${BLUE}[+] =============================================== [+]${NC}"
   echo -e ""
   echo -e "This script was created specifically to install the Arix theme from GitHub."

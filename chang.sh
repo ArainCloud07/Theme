@@ -19,7 +19,9 @@ banner() {
     echo " \___ \| | | | | |  _  / _ \ | |\/| |  _| | |_) |"
     echo "  ___) | |_| | | |_| |/ ___ \| |  | | |___|  _ < "
     echo " |____/|____/   \____/_/   \_\_|  |_|_____|_| \_\\"
+    
     echo -e "${RESET}"
+    
 }
 
 # ===== MAIN MENU =====
@@ -27,7 +29,9 @@ while true; do
     clear
     banner
     line
-    echo -e "${CYAN}                    MAIN MENU                       ${RESET}"
+    echo -e "${CYAN}===================================================================${RESET}"
+    echo -e "${CYAN}                    MAIN MENU  (V 26.1)                     ${RESET}"
+    echo -e "${CYAN}===================================================================${RESET}"
     line
     echo -e "${YELLOW}1)${RESET} Themes"
     echo -e "${YELLOW}2)${RESET} Blueprint Extensions ${CYAN}(Auto Install)${RESET}"

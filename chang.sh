@@ -29,9 +29,9 @@ while true; do
     clear
     banner
     line
-    echo -e "${CYAN}===================================================================${RESET}"
+    
     echo -e "${CYAN}                    MAIN MENU  (V 26.1)                     ${RESET}"
-    echo -e "${CYAN}===================================================================${RESET}"
+
     line
     echo -e "${YELLOW}1)${RESET} Themes"
     echo -e "${YELLOW}2)${RESET} Blueprint Extensions ${CYAN}(Auto Install)${RESET}"

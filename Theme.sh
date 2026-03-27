@@ -470,11 +470,28 @@ install_theme() {
     
     print_info "[3/4] Installing $THEME_NAME via Blueprint..."
     cd /var/www/pterodactyl
-    sudo blueprint -install "$IDENTIFIER"
+    
+    # ====================================================================
+    # 🔄 BLUEPRINT INSTALLATION WITH FALLBACK LOGIC
+    # ====================================================================
+    # ১. প্রথমে আপনার নতুন লজিক দিয়ে ইন্সটল করার চেষ্টা করবে
+    if sudo blueprint -install "$IDENTIFIER"; then
+        print_success "'$THEME_NAME' installed successfully using standard Blueprint command."
+    else
+        print_warning "Standard installation failed! Running fallback logic (from first script)..."
+        # ২. ফেইল করলে আপনার প্রথম স্ক্রিপ্টের লজিক (yes | blueprint -i) রান হবে
+        if yes | sudo blueprint -i "$DOWNLOADED_FILE"; then
+            print_success "'$THEME_NAME' installed successfully using fallback method."
+        else
+            print_error "Fallback installation also failed. Please check panel logs."
+            sudo rm -f "/var/www/pterodactyl/$DOWNLOADED_FILE"
+            return 1
+        fi
+    fi
+    # ====================================================================
+    
     sudo chown -R www-data:www-data /var/www/pterodactyl
     sudo rm -f "/var/www/pterodactyl/$DOWNLOADED_FILE"
-    
-    print_success "'$THEME_NAME' installed successfully."
 
   elif [ "$INSTALL_TYPE" == "standard" ]; then
     print_info "[2/4] Extracting files..."

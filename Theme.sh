@@ -346,7 +346,7 @@ install_theme() {
     # BEAUTIFUL V26.3 THEMES MENU BANNER
     # -----------------------------------------------------
     echo -e "${BOLD}${BRIGHT_MAGENTA}  ❖ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ❖${NC}"
-    echo -e "${BOLD}${BRIGHT_CYAN}                  🌟  T H E M E S   M E N U   V 2 6 . 3  🌟               ${NC}"
+    echo -e "${BOLD}${BRIGHT_CYAN}                  🌟  T H E M E S   M E N U   (V 2 6 . 1)   🌟               ${NC}"
     echo -e "${BOLD}${BRIGHT_MAGENTA}  ❖ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ❖${NC}"
     echo " "
 

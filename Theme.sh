@@ -354,7 +354,7 @@ install_theme() {
     # 3-COLUMN GRID DISPLAY LOGIC
     # -----------------------------------------------------
     HARDCODED_THEMES=(
-        "ABYSS Theme" "Arix Theme" "Billing Theme" "Catppuccindactyl Theme" "Darkenate Theme"
+        "ABYSS Theme" "Billing Theme" "Catppuccindactyl Theme" "Darkenate Theme"
         "Elysium Theme" "Enigma Theme" "Euphoria Theme" "Frostcore Theme" "Hyper Theme V1"
         "IceMinecraft Theme" "Lemem Theme" "Lu Theme" "Navy Seals Slice Theme" "Nebula Theme"
         "Nightcore Theme" "Noobe Theme" "Nook Theme" "Refresh Theme" "Stellar Theme"
@@ -392,14 +392,14 @@ install_theme() {
     echo " "
     echo -e " ${BRIGHT_WHITE}${BOLD}[00]${NC}  ${RED}Exit${NC}"
     echo " "
-    TOTAL_OPTIONS=$((21 + DYNAMIC_COUNT))
+    TOTAL_OPTIONS=$((20 + DYNAMIC_COUNT))
     echo -n -e "${BOLD}Enter your choice (0-$TOTAL_OPTIONS)${NC}${BOLD}: ${NC}"
     read SELECT_THEME
 
     if [[ "$SELECT_THEME" == "0" || "$SELECT_THEME" == "00" ]]; then
         echo -e "\n${BOLD}Installation cancelled.${NC}"
         return
-    elif [[ "$SELECT_THEME" -ge 1 && "$SELECT_THEME" -le 21 ]]; then
+    elif [[ "$SELECT_THEME" -ge 1 && "$SELECT_THEME" -le 20 ]]; then
         case "$SELECT_THEME" in
           1|01) submenu_abyss && break ;;
           2|02) THEME_NAME="Billing"; THEME_URL="$URL_FG/billing.zip"; INSTALL_TYPE="standard"; break ;;
@@ -422,8 +422,8 @@ install_theme() {
           19) THEME_NAME="Stellar"; THEME_URL="$URL_FG/stellar.zip"; INSTALL_TYPE="standard"; break ;;
           20) submenu_xlpanel && break ;;
         esac
-    elif [[ "$SELECT_THEME" -ge 22 && "$SELECT_THEME" -le "$TOTAL_OPTIONS" ]]; then
-        INDEX=$((SELECT_THEME - 22))
+    elif [[ "$SELECT_THEME" -ge 21 && "$SELECT_THEME" -le "$TOTAL_OPTIONS" ]]; then
+        INDEX=$((SELECT_THEME - 21))
         THEME_NAME="${DYNAMIC_NAMES[$INDEX]}"
         THEME_URL="${DYNAMIC_URLS[$INDEX]}"
         INSTALL_TYPE="${DYNAMIC_TYPES[$INDEX]}"

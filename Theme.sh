@@ -73,8 +73,8 @@ show_sdgamer_banner() {
     echo "  ___) | |_| | |_| |/ ___ \| |  | | |___|  _ < "
     echo " |____/|____/ \____/_/   \_\_|  |_|_____|_| \_\\"
     echo -e "${NC}"
-    echo -e "${BOLD}${MAGENTA}               AUTO INSTALLER${NC}"
-    echo -e "${BLUE}=================================================${NC}"
+    echo -e "${BOLD}${MAGENTA}      🌎     THEME INSTALLER (V26.1)  🌐${NC}"
+    echo -e "${BLUE}============================================================${NC}"
 }
 
 show_abyss_banner() {
@@ -86,8 +86,8 @@ show_abyss_banner() {
     echo "   / ___ \| |_) | /  \  ___) |___) |"
     echo "  /_/   \_\____/ /_/\_\|____/|____/ "
     echo -e "${NC}"
-    echo -e "${BOLD}${CYAN}               POWERED BY - SDGAMER${NC}"
-    echo -e "${BLUE}=================================================${NC}"
+    echo -e "${BOLD}${CYAN}               POWERED BY - SDGAMER (V26.1)${NC}"
+    echo -e "${BLUE}======================================================${NC}"
 }
 
 show_catppuccin_banner() {
@@ -99,7 +99,7 @@ show_catppuccin_banner() {
     echo " | |___ / ___ \| | |  __/|  __/| |_| | |__| |___ | || |\  |"
     echo "  \____/_/   \_\_| |_|   |_|    \___/ \____\____|___|_| \_|"
     echo -e "${NC}"
-    echo -e "${BOLD}${MAGENTA}                     POWERED BY - SDGAMER${NC}"
+    echo -e "${BOLD}${MAGENTA}                     POWERED BY - SDGAMER (V26.1)${NC}"
     echo -e "${CYAN}===============================================================${NC}"
 }
 
@@ -112,8 +112,8 @@ show_navy_banner() {
     echo " | |\  |/ ___ \   \ V /     | |   "
     echo " |_| \_/_/   \_\   \_/      |_|   "
     echo -e "${NC}"
-    echo -e "${BOLD}${MAGENTA}               POWERED BY - SDGAMER${NC}"
-    echo -e "${BLUE}=================================================${NC}"
+    echo -e "${BOLD}${MAGENTA}               POWERED BY - SDGAMER (V26.1)${NC}"
+    echo -e "${BLUE}=========================================================${NC}"
 }
 
 show_nebula_banner() {
@@ -125,8 +125,8 @@ show_nebula_banner() {
     echo "  | |\  | |___| |_) | |_| | |___ / ___ \ "
     echo "  |_| \_|_____|____/ \___/|_____/_/   \_\\"
     echo -e "${NC}"
-    echo -e "${BOLD}${MAGENTA}               POWERED BY - SDGAMER${NC}"
-    echo -e "${BLUE}=================================================${NC}"
+    echo -e "${BOLD}${MAGENTA}               POWERED BY - SDGAMER (V26.1)${NC}"
+    echo -e "${BLUE}==========================================================${NC}"
 }
 
 show_xlpanel_banner() {
@@ -138,8 +138,8 @@ show_xlpanel_banner() {
     echo "    /  \| |___|  __/ ___ \| |\  | |___| |___ "
     echo "   /_/\_\_____|_| /_/   \_\_| \_|_____|_____|"
     echo -e "${NC}"
-    echo -e "${BOLD}${MAGENTA}               POWERED BY - SDGAMER${NC}"
-    echo -e "${BLUE}=================================================${NC}"
+    echo -e "${BOLD}${MAGENTA}               POWERED BY - SDGAMER (V26.1)${NC}"
+    echo -e "${BLUE}==========================================================${NC}"
 }
 
 # ==========================================
@@ -402,26 +402,25 @@ install_theme() {
     elif [[ "$SELECT_THEME" -ge 1 && "$SELECT_THEME" -le 21 ]]; then
         case "$SELECT_THEME" in
           1|01) submenu_abyss && break ;;
-          2|02) THEME_NAME="Arix"; THEME_URL="$URL_FG/arix.zip"; INSTALL_TYPE="standard"; break ;;
-          3|03) THEME_NAME="Billing"; THEME_URL="$URL_FG/billing.zip"; INSTALL_TYPE="standard"; break ;;
-          4|04) submenu_catppuccin && break ;;
-          5|05) THEME_NAME="Darkenate"; THEME_URL="$URL_EX/darkenate.blueprint"; INSTALL_TYPE="blueprint"; break ;;
-          6|06) THEME_NAME="Elysium"; THEME_URL="$URL_FG/elysium.zip"; INSTALL_TYPE="standard"; break ;;
-          7|07) THEME_NAME="Enigma"; THEME_URL="$URL_FG/enigma.zip"; INSTALL_TYPE="standard"; break ;;
-          8|08) THEME_NAME="Euphoria"; THEME_URL="$URL_EX/euphoriatheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;
-          9|09) THEME_NAME="Frostcore"; THEME_URL="$URL_FG/frostcore.zip"; INSTALL_TYPE="standard"; break ;;
-          10) THEME_NAME="Hyper V1"; THEME_URL="https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/hyperv1.sh"; INSTALL_TYPE="script"; break ;;
-          11) THEME_NAME="IceMinecraft"; THEME_URL="$URL_FG/iceMinecraft.zip"; INSTALL_TYPE="standard"; break ;;
-          12) THEME_NAME="Lemem"; THEME_URL="$URL_EX/lememtheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;
-          13) THEME_NAME="Lu"; THEME_URL="$URL_EX/lutheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;
-          14) submenu_navy && break ;;
-          15) submenu_nebula && break ;;
-          16) THEME_NAME="Nightcore"; THEME_URL="$URL_FG/nightcore.zip"; INSTALL_TYPE="standard"; break ;;
-          17) THEME_NAME="Noobe"; THEME_URL="$URL_FG/noobe.zip"; INSTALL_TYPE="standard"; break ;;
-          18) THEME_NAME="Nook"; THEME_URL="$URL_FG/nook.zip"; INSTALL_TYPE="standard"; break ;;
-          19) THEME_NAME="Refresh"; THEME_URL="$URL_EX/refreshtheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;
-          20) THEME_NAME="Stellar"; THEME_URL="$URL_FG/stellar.zip"; INSTALL_TYPE="standard"; break ;;
-          21) submenu_xlpanel && break ;;
+          2|02) THEME_NAME="Billing"; THEME_URL="$URL_FG/billing.zip"; INSTALL_TYPE="standard"; break ;;
+          3|03) submenu_catppuccin && break ;;
+          4|04) THEME_NAME="Darkenate"; THEME_URL="$URL_EX/darkenate.blueprint"; INSTALL_TYPE="blueprint"; break ;;
+          5|05) THEME_NAME="Elysium"; THEME_URL="$URL_FG/elysium.zip"; INSTALL_TYPE="standard"; break ;;
+          6|06) THEME_NAME="Enigma"; THEME_URL="$URL_FG/enigma.zip"; INSTALL_TYPE="standard"; break ;;
+          7|07) THEME_NAME="Euphoria"; THEME_URL="$URL_EX/euphoriatheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;
+          8|08) THEME_NAME="Frostcore"; THEME_URL="$URL_FG/frostcore.zip"; INSTALL_TYPE="standard"; break ;;
+          9) THEME_NAME="Hyper V1"; THEME_URL="https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/hyperv1.sh"; INSTALL_TYPE="script"; break ;;
+          10) THEME_NAME="IceMinecraft"; THEME_URL="$URL_FG/iceMinecraft.zip"; INSTALL_TYPE="standard"; break ;;
+          11) THEME_NAME="Lemem"; THEME_URL="$URL_EX/lememtheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;
+          12) THEME_NAME="Lu"; THEME_URL="$URL_EX/lutheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;
+          13) submenu_navy && break ;;
+          14) submenu_nebula && break ;;
+          15) THEME_NAME="Nightcore"; THEME_URL="$URL_FG/nightcore.zip"; INSTALL_TYPE="standard"; break ;;
+          16) THEME_NAME="Noobe"; THEME_URL="$URL_FG/noobe.zip"; INSTALL_TYPE="standard"; break ;;
+          17) THEME_NAME="Nook"; THEME_URL="$URL_FG/nook.zip"; INSTALL_TYPE="standard"; break ;;
+          18) THEME_NAME="Refresh"; THEME_URL="$URL_EX/refreshtheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;
+          19) THEME_NAME="Stellar"; THEME_URL="$URL_FG/stellar.zip"; INSTALL_TYPE="standard"; break ;;
+          20) submenu_xlpanel && break ;;
         esac
     elif [[ "$SELECT_THEME" -ge 22 && "$SELECT_THEME" -le "$TOTAL_OPTIONS" ]]; then
         INDEX=$((SELECT_THEME - 22))
@@ -563,37 +562,13 @@ install_theme() {
     php artisan view:clear
     php artisan optimize:clear
     
-    # ====================================================================
-    # ARIX SPECIFIC POST-INSTALLATION SCRIPT
-    # ====================================================================
-    if [[ "$THEME_NAME" == "Arix" ]]; then
-      print_info "Running Arix specific post-installation steps..."
-      
-      # Cara cepat (Will ignore if 'arix-clear' command is not found globally)
-      arix-clear 2>/dev/null || true
-      
-      # Manual
-      bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/V.sh)
-      cd /var/www/pterodactyl
-      php artisan config:clear
-      php artisan cache:clear
-      php artisan view:clear
-      php artisan route:clear
-      sudo chown -R www-data:www-data /var/www/pterodactyl
-sudo chmod -R 755 /var/www/pterodactyl/storage
-sudo chmod -R 755 /var/www/pterodactyl/public/uploads/arix
-cd /var/www/pterodactyl
-yarn install
-yarn build:production
-    fi
-    # ====================================================================
 
     print_success "'$THEME_NAME' installed successfully."
   fi
 
   echo " "
   log_success "[=================================================]"
-  log_success "[       INSTALLATION COMPLETED SUCCESSFULLY       ]"
+  log_success "[   ⚜️    INSTALLATION COMPLETED SUCCESSFULLY   ⚜️    ]"
   log_success "[=================================================]"
   echo " "
   sleep 3

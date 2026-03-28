@@ -217,7 +217,7 @@ submenu_navy() {
     echo -n -e "\n${BOLD}Select an option (a-b, or 0 to back): ${NC}"
     read choice
     case "$choice" in
-      a|A) THEME_NAME="Navy Seals V1"; THEME_URL="$URL_EX/Navy%20seals%20slice.blueprint"; INSTALL_TYPE="blueprint"; return 0;;
+      a|A) THEME_NAME="Navy Seals V1"; THEME_URL="$URL_EX/navyseals.blueprint"; INSTALL_TYPE="blueprint"; return 0;;
       b|B) THEME_NAME="Navy Seals V2"; THEME_URL="$URL_EX/navyseals.blueprint"; INSTALL_TYPE="blueprint"; return 0;;
       0) return 1;;
       *) print_error "Invalid selection, please try again."; sleep 1;;

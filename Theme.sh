@@ -278,7 +278,7 @@ install_theme() {
 
   IGNORE_ALPHABETS=(
       "abysspurple" "amberabyss" "crimsonabyss" "emeraldabyss"
-      "arix" "billing" "catppuccindactyl" "darkenate" "elysium"
+       "billing" "catppuccindactyl" "darkenate" "elysium"
       "enigma" "euphoria" "euphoriatheme" "frostcore" "hyper" "hyperv"
       "iceminecraft" "lemem" "lememtheme" "lu" "lutheme"
       "navyseals" "navysealsslice" "nebula" "nightcore" "noobe" "nook"

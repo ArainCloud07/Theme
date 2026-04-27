@@ -8,6 +8,6 @@ cd /var/www/pterodactyl
 
 yarn install
 yarn build
-
+php artisan arix install
 php artisan view:clear
 php artisan cache:clear

@@ -1,6 +1,6 @@
 cd /var/www/pterodactyl && \
-wget https://raw.githubusercontent.com/sdgamer1263-sketch/Theme/main/F/sdsa.zip && \
-unzip -o sdca.zip && \
+wget https://raw.githubusercontent.com/sdgamer1263-sketch/Theme/main/sdsa.zip && \
+unzip -o sdsa.zip && \
 yarn install && \
 yarn build:production && \
 php artisan view:clear && \

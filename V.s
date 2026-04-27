@@ -6,7 +6,8 @@ wget -O arix0.zip https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/mai
 unzip -o arix0.zip && \
 cd /var/www/pterodactyl
 
-yarn install yarn build
+yarn install
+yarn build
 
 php artisan view:clear
 php artisan cache:clear

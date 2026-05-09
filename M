@@ -1,6 +1,6 @@
 #!/bin/bash
 # ╔══════════════════════════════════════════════════════════════════════════╗
-#  AyushTheWarrior Tunnel v3.0 — INSANE Edition
+#  SDGAMER Tunnel v3.0 — INSANE Edition
 #  ► tunnel add <port>          → forward single port (TCP + UDP)
 #  ► tunnel add <start>-<end>   → forward entire range (TCP + UDP)
 #  ► tunnel stop <port|range>   → kill tunnel(s)
@@ -18,8 +18,7 @@ SSH_PORT=22
 SECRET_HASH="5d7235a0c4aff6c5c9b369a5e03636557d03291f4646c9c2120274590b955cd2"
 
 # ── Paths ──────────────────────────────────────────────────────────────────
-CONFIG_DIR="$HOME/.ayush-tunnel"
-KEY_FILE="$CONFIG_DIR/.key"
+CONFIG_DIR="$HOME/.sdgamer-tunnel"
 LOG_DIR="$CONFIG_DIR/logs"
 PID_DIR="$CONFIG_DIR/pids"
 MAP_DIR="$CONFIG_DIR/maps"
@@ -44,23 +43,6 @@ NEON_GREEN="\e[38;5;46m"
 PURPLE="\e[38;5;129m"
 
 # ══════════════════════════════════════════════════════════════════════════
-#  EMBEDDED RESTRICTED SSH KEY  (port-forward only — no shell access)
-# ══════════════════════════════════════════════════════════════════════════
-setup_key(){
-  if [ ! -f "$KEY_FILE" ]; then
-    cat > "$KEY_FILE" << 'KEY'
------BEGIN RSA PRIVATE KEY-----
-
-C+dt+QKBgC7qPo3Oa1HI/tFZw+ER5/Ahu+Lh3dQ5j7wvpzl/rWaa1lFhbjt/HSKP
-5vij71MLoTV0NISgNnyxrWcIFdTv4GM2Qqy/K5SyTEXvJ52qOExNsQutJHr/ntSG
-xLKUiB8ev9WrXpyIYm1hjLA4wTOMWOrqlwdETgEw6OVJxiVLvBuR
------END RSA PRIVATE KEY-----
-KEY
-    chmod 600 "$KEY_FILE"
-  fi
-}
-
-# ══════════════════════════════════════════════════════════════════════════
 #  UI HELPERS
 # ══════════════════════════════════════════════════════════════════════════
 banner(){
@@ -68,7 +50,7 @@ banner(){
   echo
   echo -e "${FIRE_1}${BOLD}  ╔═══════════════════════════════════════════════════════════════════════╗${RST}"
   echo -e "${FIRE_2}${BOLD}  ║                                                                       ║${RST}"
-  echo -e "${FIRE_2}${BOLD}  ║     ${FIRE_4}⚡⚡⚡  ${NEON_PINK}${BOLD}AyushTheWarrior Tunnel v3.0 — INSANE EDITION${FIRE_2}  ⚡⚡⚡${FIRE_2}     ║${RST}"
+  echo -e "${FIRE_2}${BOLD}  ║         ${FIRE_4}⚡⚡⚡  ${NEON_PINK}${BOLD}SDGAMER Tunnel v3.0 — INSANE EDITION${FIRE_2}  ⚡⚡⚡${FIRE_2}        ║${RST}"
   echo -e "${FIRE_3}${BOLD}  ║                                                                       ║${RST}"
   echo -e "${FIRE_3}${BOLD}  ║          ${NEON_BLUE}TCP + UDP ${WHT}• ${NEON_GREEN}Range Forwarding ${WHT}• ${PURPLE}Auto-Reconnect${FIRE_3}          ║${RST}"
   echo -e "${FIRE_4}${BOLD}  ║                                                                       ║${RST}"
@@ -228,7 +210,7 @@ authenticate(){
   echo
   echo -e "  ${BG_GRN}${WHT}${BOLD}  ✔  ACCESS GRANTED  ✔  ${RST}"
   echo
-  echo -e "  ${NEON_GREEN}${BOLD}Welcome, AyushTheWarrior!${RST}"
+  echo -e "  ${NEON_GREEN}${BOLD}Welcome, SDGAMER!${RST}"
   echo
   sleep 1.5
 }
@@ -380,6 +362,34 @@ stop_port(){
 
   rm -f "$MAP_DIR/tcp-$port" "$LOG_DIR/tcp-$port.log" "$LOG_DIR/udp-$port.log"
   return $(( 1 - stopped ))
+}
+
+# ══════════════════════════════════════════════════════════════════════════
+#  STOP ALL TUNNELS
+# ══════════════════════════════════════════════════════════════════════════
+cmd_stop_all(){
+  banner
+  echo -e "  ${RED}${BOLD}🛑 TERMINATING ALL TUNNELS${RST}"
+  echo
+  fancy_hr
+  echo
+
+  local stopped=0
+
+  for pid_file in "$PID_DIR"/*.pid; do
+    [ -f "$pid_file" ] || continue
+    for pid in $(cat "$pid_file" 2>/dev/null); do
+      if kill "$pid" 2>/dev/null; then
+        stopped=$(( stopped + 1 ))
+      fi
+    done
+    rm -f "$pid_file"
+  done
+  
+  rm -f "$MAP_DIR"/tcp-* "$LOG_DIR"/*.log 2>/dev/null
+
+  echo -e "  ${NEON_GREEN}${BOLD}✔ Stopped ${FIRE_2}${BOLD}$stopped${RST} ${NEON_GREEN}${BOLD}tunnel process(es)${RST}"
+  echo
 }
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -799,7 +809,7 @@ cmd_help(){
   echo -e "  ${NEON_GREEN}${BOLD}🔒${RST}  Access code authentication"
   echo -e "  ${NEON_GREEN}${BOLD}🔒${RST}  Auto-reconnect on drop"
   echo -e "  ${NEON_GREEN}${BOLD}🔒${RST}  Per-port PID tracking"
-  echo -e "  ${NEON_GREEN}${BOLD}🔒${RST}  Logs in ~/.astranode-tunnel/logs/"
+  echo -e "  ${NEON_GREEN}${BOLD}🔒${RST}  Logs in ~/.sdgamer-tunnel/logs/"
   echo
 }
 

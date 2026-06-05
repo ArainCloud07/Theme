@@ -90,27 +90,30 @@ install_sdgamer() {
 
     print_status "Starting Fresh Install for SDGAMER"
 
-    # --- Step 1: Install Node.js 20.x ---
-    print_header "INSTALLING NODE.JS 20.x"
+    # --- Step 1: Install Node.js 22.x (FIXED) ---
+    print_header "INSTALLING NODE.JS 22.x"
+    
+    print_status "Cleaning up old conflicting GPG keys"
+    sudo rm -f /etc/apt/sources.list.d/nodesource.list
+    sudo rm -f /etc/apt/keyrings/nodesource.gpg
+    sudo rm -f /usr/share/keyrings/nodesource.gpg
+    
+    print_status "Updating package lists"
+    sudo apt-get update > /dev/null 2>&1 &
+    animate_progress $! "Updating package lists"
+
     print_status "Installing required packages"
     sudo apt-get install -y ca-certificates curl gnupg > /dev/null 2>&1 &
     animate_progress $! "Installing dependencies"
     
-    print_status "Setting up Node.js repository"
-    sudo mkdir -p /etc/apt/keyrings
-    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | \
-      sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg > /dev/null 2>&1
-    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | \
-      sudo tee /etc/apt/sources.list.d/nodesource.list > /dev/null 2>&1
-      
-    print_status "Updating package lists"
-    sudo apt-get update > /dev/null 2>&1 &
-    animate_progress $! "Updating package lists"
+    print_status "Setting up Node.js 22.x repository"
+    curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - > /dev/null 2>&1 &
+    animate_progress $! "Setting up repository"
     
-    print_status "Installing Node.js"
+    print_status "Installing Node.js 22"
     sudo apt-get install -y nodejs > /dev/null 2>&1 &
     animate_progress $! "Installing Node.js"
-    check_success "Node.js installed" "Failed to install Node.js"
+    check_success "Node.js 22.x installed" "Failed to install Node.js"
 
     # --- Step 2: Install Yarn & Dependencies ---
     print_header "INSTALLING DEPENDENCIES"
@@ -136,7 +139,7 @@ install_sdgamer() {
     print_header "DOWNLOADING SDGAMER FILES"
     print_status "Downloading latest release"
     DOWNLOAD_URL=$(curl -s https://api.github.com/repos/BlueprintFramework/framework/releases/latest | grep 'browser_download_url' | grep 'release.zip' | cut -d '"' -f 4)
-    wget "$DOWNLOAD_URL" -O "release.zip"
+    wget -q "$DOWNLOAD_URL" -O "release.zip"
     check_success "Release downloaded" "Failed to download release"
 
     print_status "Extracting release files"

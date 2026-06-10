@@ -20,14 +20,14 @@ WHITE='\e[1;37m'
 show_banner() {
     clear
     echo -e "${CYAN}${BOLD}"
-    echo "  ____  ____   ____    _    __  __ _____ ____  "
-    echo " / ___||  _ \ / ___|  / \  |  \/  | ____|  _ \ "
-    echo " \___ \| | | | |  _  / _ \ | |\/| |  _| | |_) |"
-    echo "  ___) | |_| | |_| |/ ___ \| |  | | |___|  _ < "
-    echo " |____/|____/ \____/_/   \_\_|  |_|_____|_| \_\\"
+    echo "  ____  _   _ _   _ ____  _   _    _    __  __ "
+    echo " / ___|| | | | | | | __ )| | | |  / \  |  \/  |"
+    echo " \___ \| |_| | | | |  _ \| |_| | / _ \ | |\/| |"
+    echo "  ___) |  _  | |_| | |_) |  _  |/ ___ \| |  | |"
+    echo " |____/|_| |_|\___/|____/|_| |_/_/   \_\_|  |_|"
     echo -e "${NC}"
     echo -e "${MAGENTA}❖ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ❖${NC}"
-    echo -e "${BOLD}${WHITE}           PROJECT: SKA HOST (SDGAMER) PANEL  (V26.1)     ${NC}"
+    echo -e "${BOLD}${WHITE}           PROJECT: Backchodh (Shubham) PANEL  (V26.1)     ${NC}"
     echo -e "${MAGENTA}❖ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ❖${NC}"
     echo ""
 }
@@ -69,17 +69,17 @@ blueprint_menu() {
         case $bp_choice in
             1)
                 echo -e "\n${CYAN}Starting Blueprint 1 Installation...${NC}"
-                bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/blueprint.sh)
+                bash <(curl -sL https://raw.githubusercontent.com/ArainCloud07/Theme/refs/heads/main/blueprint.sh)
                 pause
                 ;;
             2)
                 echo -e "\n${CYAN}Starting Blueprint 2 Installation...${NC}"
-                bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/blueprint-2.sh)
+                bash <(curl -sL https://raw.githubusercontent.com/ArainCloud07/Theme/refs/heads/main/blueprint-2.sh)
                 pause
                 ;;
             3)
                 echo -e "\n${CYAN}Starting Blueprint Auto Fix...${NC}"
-                bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/fix.sh)
+                bash <(curl -sL https://raw.githubusercontent.com/ArainCloud07/Theme/refs/heads/main/fix.sh)
                 pause
                 ;;
             0)
@@ -121,7 +121,7 @@ manage_extensions() {
 
     if [[ "${ext_choice,,}" == "all" ]]; then
         echo -e "\n${RED}Uninstalling ALL extensions...${NC}"
-        bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/uninstallblueprint.sh)
+        bash <(curl -sL https://raw.githubusercontent.com/ArainCloud07/Theme/refs/heads/main/uninstallblueprint.sh)
     else
         IFS=',' read -ra SELECTED_EXTS <<< "$ext_choice"
         for sel in "${SELECTED_EXTS[@]}"; do
@@ -213,12 +213,12 @@ while true; do
             ;;
         2)
             echo -e "\n${CYAN}Starting Theme + Extension Setup...${NC}"
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/chang.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/ArainCloud07/Theme/refs/heads/main/chang.sh)
             pause
             ;;
         3)
             echo -e "\n${CYAN}Initializing Email Setup...${NC}"
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/adon/main/email.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/ArainCloud07/adon/refs/heads/main/email.sh)
             pause
             ;;
         4)

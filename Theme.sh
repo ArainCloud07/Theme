@@ -47,9 +47,10 @@ BG_YELLOW='\033[43m'
 BG_RED='\033[41m'
 
 # URLs Base
-URL_FG="https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/Fg"
-URL_EX="https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/Ex"
-URL_TY="https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/Ex/Ty"
+URL_FG="https://raw.githubusercontent.com/ArainCloud07/Theme/main/Fg"
+URL_F="https://raw.githubusercontent.com/ArainCloud07/Theme/main/F"
+URL_EX="https://raw.githubusercontent.com/ArainCloud07/Theme/main/Ex"
+URL_TY="https://raw.githubusercontent.com/ArainCloud07/Theme/main/Ex/Ty"
 
 # Print Functions
 print_info() { echo -e "\n  ${BG_BLUE}${BRIGHT_WHITE}${BOLD} INFO ${NC} ${BOLD}$1${NC}\n"; }
@@ -67,11 +68,11 @@ log_error() { echo -e "${BOLD}${RED}$1${NC}"; }
 show_sdgamer_banner() {
     clear
     echo -e "${BRIGHT_CYAN}"
-    echo "  ____  ____   ____    _    __  __ _____ ____  "
-    echo " / ___||  _ \ / ___|  / \  |  \/  | ____|  _ \ "
-    echo " \___ \| | | | |  _  / _ \ | |\/| |  _| | |_) |"
-    echo "  ___) | |_| | |_| |/ ___ \| |  | | |___|  _ < "
-    echo " |____/|____/ \____/_/   \_\_|  |_|_____|_| \_\\"
+    echo "  ____  _   _ _   _ ____  _   _    _    __  __ "
+    echo " / ___|| | | | | | | __ )| | | |  / \  |  \/  |"
+    echo " \___ \| |_| | | | |  _ \| |_| | / _ \ | |\/| |"
+    echo "  ___) |  _  | |_| | |_) |  _  |/ ___ \| |  | |"
+    echo " |____/|_| |_|\___/|____/|_| |_/_/   \_\_|  |_|"
     echo -e "${NC}"
     echo -e "${BOLD}${MAGENTA}      🌎     THEME INSTALLER (V26.1)  🌐${NC}"
     echo -e "${BLUE}============================================================${NC}"
@@ -268,7 +269,7 @@ submenu_xlpanel() {
 install_theme() {
   print_info "Checking for new themes dynamically..."
 
-  API_URL="https://api.github.com/repos/sdgamer8263-sketch/Theme/git/trees/main?recursive=1"
+  API_URL="https://api.github.com/repos/ArainCloud07/Theme/git/trees/main?recursive=1"
   
   if [ -n "$GITHUB_TOKEN" ]; then
       TREE_DATA=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -H "User-Agent: AutoInstaller" "$API_URL")
@@ -326,7 +327,7 @@ install_theme() {
               fi
               
               DYNAMIC_NAMES[$DYNAMIC_COUNT]="$display_name"
-              DYNAMIC_URLS[$DYNAMIC_COUNT]="https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/${file_path// /%20}"
+              DYNAMIC_URLS[$DYNAMIC_COUNT]="https://raw.githubusercontent.com/ArainCloud07/Theme/main/${file_path// /%20}"
               
               if [[ "$filename" == *.zip ]]; then
                   DYNAMIC_TYPES[$DYNAMIC_COUNT]="standard"
@@ -335,7 +336,7 @@ install_theme() {
               fi
               ((DYNAMIC_COUNT++))
           fi
-      done < <(echo "$TREE_DATA" | jq -r '.tree[] | select((.path | startswith("Fg/") and endswith(".zip")) or (.path | startswith("Ex/") and endswith(".blueprint"))) | .path' | awk -F'/' '{print $NF "|" $0}' | sort -f | cut -d'|' -f2)
+      done < <(echo "$TREE_DATA" | jq -r '.tree[] | select((.path | startswith("Fg/") and endswith(".zip")) or (.path | startswith("F/") and endswith(".zip")) or (.path | startswith("Ex/") and endswith(".blueprint"))) | .path' | awk -F'/' '{print $NF "|" $0}' | sort -f | cut -d'|' -f2)
   fi
 
   while true; do
@@ -409,7 +410,7 @@ install_theme() {
           6|06) THEME_NAME="Enigma"; THEME_URL="$URL_FG/enigma.zip"; INSTALL_TYPE="standard"; break ;;
           7|07) THEME_NAME="Euphoria"; THEME_URL="$URL_EX/euphoriatheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;
           8|08) THEME_NAME="Frostcore"; THEME_URL="$URL_FG/frostcore.zip"; INSTALL_TYPE="standard"; break ;;
-          9) THEME_NAME="Hyper V1"; THEME_URL="https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/hyperv1.sh"; INSTALL_TYPE="script"; break ;;
+          9) THEME_NAME="Hyper V1"; THEME_URL="https://raw.githubusercontent.com/ArainCloud07/Theme/main/hyperv1.sh"; INSTALL_TYPE="script"; break ;;
           10) THEME_NAME="IceMinecraft"; THEME_URL="$URL_FG/iceMinecraft.zip"; INSTALL_TYPE="standard"; break ;;
           11) THEME_NAME="Lemem"; THEME_URL="$URL_EX/lememtheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;
           12) THEME_NAME="Lu"; THEME_URL="$URL_EX/lutheme.blueprint"; INSTALL_TYPE="blueprint"; break ;;

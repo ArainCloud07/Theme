@@ -67,20 +67,20 @@ welcome_animation() {
     clear
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo -e "${CYAN}"
-    echo "  ███████╗██████╗  ██████╗  █████╗ ███╗   ███╗███████╗██████╗ "
-    echo "  ██╔════╝██╔══██╗██╔════╝ ██╔══██╗████╗ ████║██╔════╝██╔══██╗"
-    echo "  ███████╗██║  ██║██║  ███╗███████║██╔████╔██║█████╗  ██████╔╝"
-    echo "  ╚════██║██║  ██║██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  ██╔══██╗"
-    echo "  ███████║██████╔╝╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██║  ██║"
-    echo "  ╚══════╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝"
+    echo "  ███████╗██╗  ██╗██╗   ██╗██████╗ ██╗  ██╗ █████╗ ███╗   ███╗"
+    echo "  ██╔════╝██║  ██║██║   ██║██╔══██╗██║  ██║██╔══██╗████╗ ████║"
+    echo "  ███████╗███████║██║   ██║██████╔╝███████║███████║██╔████╔██║"
+    echo "  ╚════██║██╔══██║██║   ██║██╔══██╗██╔══██║██╔══██║██║╚██╔╝██║"
+    echo "  ███████║██║  ██║╚██████╔╝██████╔╝██║  ██║██║  ██║██║ ╚═╝ ██║"
+    echo "  ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝"
     echo -e "${NC}"
-    echo -e "${CYAN}                  SDGAMER TOOLKIT${NC}"
+    echo -e "${CYAN}                  Shubham TOOLKIT${NC}"
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     sleep 2
 }
 
 # Function: Install (Fresh Setup)
-install_sdgamer() {
+install_shubham() {
     print_header "FRESH INSTALLATION"
     
     if [ "$EUID" -ne 0 ]; then
@@ -88,7 +88,7 @@ install_sdgamer() {
         return 1
     fi
 
-    print_status "Starting Fresh Install for SDGAMER"
+    print_status "Starting Fresh Install for Shubham"
 
     # --- Step 1: Install Node.js 22.x (FIXED) ---
     print_header "INSTALLING NODE.JS 22.x"
@@ -158,13 +158,13 @@ install_sdgamer() {
     chmod +x blueprint.sh
     check_success "Made executable" "Failed to make executable"
 
-    print_status "Running SDGAMER installer"
+    print_status "Running Shubham installer"
     bash blueprint.sh
 }
 
 # Function: Reinstall (Rerun Only)
-reinstall_sdgamer() {
-    print_header "REINSTALLING SDGAMER"
+reinstall_shubham() {
+    print_header "REINSTALLING Shubham"
     print_status "Starting reinstallation"
     blueprint -rerun-install > /dev/null 2>&1 &
     animate_progress $! "Reinstalling"
@@ -172,8 +172,8 @@ reinstall_sdgamer() {
 }
 
 # Function: Update SDGAMER
-update_sdgamer() {
-    print_header "UPDATING SDGAMER"
+update_shubham() {
+    print_header "UPDATING Shubham"
     print_status "Starting update"
     blueprint -upgrade > /dev/null 2>&1 &
     animate_progress $! "Updating"
@@ -184,8 +184,8 @@ update_sdgamer() {
 show_menu() {
     clear
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${CYAN}           🔧 SDGAMER INSTALLER                ${NC}"
-    echo -e "${CYAN}                SDGAMER HUB                    ${NC}"
+    echo -e "${CYAN}           🔧 Shubhamm INSTALLER                ${NC}"
+    echo -e "${CYAN}                Shubham HUB                    ${NC}"
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo -e ""
     echo -e "${WHITE}╔═══════════════════════════════════════════════╗${NC}"
@@ -193,7 +193,7 @@ show_menu() {
     echo -e "${WHITE}╠═══════════════════════════════════════════════╣${NC}"
     echo -e "${WHITE}║   ${GREEN}1)${NC} ${CYAN}Fresh Install${NC}                         ${WHITE}║${NC}"
     echo -e "${WHITE}║   ${GREEN}2)${NC} ${CYAN}Reinstall (Rerun Only)${NC}                ${WHITE}║${NC}"
-    echo -e "${WHITE}║   ${GREEN}3)${NC} ${CYAN}Update SDGAMER${NC}                        ${WHITE}║${NC}"
+    echo -e "${WHITE}║   ${GREEN}3)${NC} ${CYAN}Update Shubham${NC}                        ${WHITE}║${NC}"
     echo -e "${WHITE}║   ${GREEN}0)${NC} ${RED}Exit${NC}                               ${WHITE}║${NC}"
     echo -e "${WHITE}╚═══════════════════════════════════════════════╝${NC}"
     echo -e ""
@@ -209,13 +209,13 @@ while true; do
     read -r choice
     
     case $choice in
-        1) install_sdgamer ;;
-        2) reinstall_sdgamer ;;
-        3) update_sdgamer ;;
+        1) install_shubham ;;
+        2) reinstall_shubham ;;
+        3) update_shubham ;;
         0) 
             echo -e "${GREEN}Exiting SDGAMER Installer...${NC}"
             echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-            echo -e "${CYAN}           Thank you for using SDGAMER!       ${NC}"
+            echo -e "${CYAN}           Thank you for using Shubham!       ${NC}"
             echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
             sleep 2
             exit 0 

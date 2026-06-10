@@ -14,11 +14,11 @@ line() {
 
 banner() {
     echo -e "${CYAN}"
-    echo "  ____  ____     ____    _    __  __ _____ ____  "
-    echo " / ___||  _ \   / ___|  / \  |  \/  | ____|  _ \ "
-    echo " \___ \| | | | | |  _  / _ \ | |\/| |  _| | |_) |"
-    echo "  ___) | |_| | | |_| |/ ___ \| |  | | |___|  _ < "
-    echo " |____/|____/   \____/_/   \_\_|  |_|_____|_| \_\\"
+    echo "  ____  _   _ _   _ ____  _   _    _    __  __ "
+    echo " / ___|| | | | | | | __ )| | | |  / \  |  \/  |"
+    echo " \___ \| |_| | | | |  _ \| |_| | / _ \ | |\/| |"
+    echo "  ___) |  _  | |_| | |_) |  _  |/ ___ \| |  | |"
+    echo " |____/|_| |_|\___/|____/|_| |_/_/   \_\_|  |_|"
     
     echo -e "${RESET}"
     
@@ -43,7 +43,7 @@ while true; do
 
         1)
             echo -e "${GREEN}🎨 Running Themes installer...${RESET}"
-            bash <(curl -sL https://raw.githubusercontent.com/sdgamer8263-sketch/Theme/main/Theme.sh)
+            bash <(curl -sL https://raw.githubusercontent.com/ArainCloud07/Theme/refs/heads/main/Theme.sh)
             echo -e "${GREEN}✅ Themes process finished!${RESET}"
             sleep 2
         ;;
